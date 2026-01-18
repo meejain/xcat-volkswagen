@@ -1,0 +1,40 @@
+{
+  "variantName": "hero-vw",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-01-18T08:40:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.volkswagen-group.com/en",
+    "originPage": "Volkswagen Group corporate homepage",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "minimal",
+    "purpose": "corporate-hero",
+    "imagePattern": "large-background"
+  },
+  "contentPattern": {
+    "structure": "heading + paragraph + CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "corporate homepage",
+      "brand landing pages",
+      "pages with full-width hero images",
+      "dark themed pages"
+    ],
+    "notSuitableFor": [
+      "light themed pages",
+      "text-only hero sections",
+      "pages without background images"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/content/vw-group"],
+    "reuseCount": 1,
+    "lastUsed": "2026-01-18T08:40:00.000Z"
+  }
+}

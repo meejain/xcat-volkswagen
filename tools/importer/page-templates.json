@@ -1,0 +1,15 @@
+{
+  "templates": [
+    {
+      "name": "vw-group-homepage",
+      "urls": ["https://www.volkswagen-group.com/en"],
+      "description": "Volkswagen Group corporate homepage with hero slider",
+      "blocks": [
+        {
+          "name": "hero-vw",
+          "instances": [".page-item--slider", ".slider-box"]
+        }
+      ]
+    }
+  ]
+}
