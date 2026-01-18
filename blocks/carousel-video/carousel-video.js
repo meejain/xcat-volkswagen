@@ -31,12 +31,45 @@ export default function decorate(block) {
       const videoContainer = document.createElement('div');
       videoContainer.className = 'carousel-video-background';
 
-      // Check if it's a video link or embedded video
+      // Check if it's a video link, embedded video, or plain text URL
       const videoLink = rows[0].querySelector('a');
       const videoEl = rows[0].querySelector('video');
       const picture = rows[0].querySelector('picture');
 
-      if (videoLink) {
+      // Check for plain text video URL (common in EDS markdown conversion)
+      const textContent = rows[0].textContent.trim();
+      const isVideoUrl = textContent.match(/https?:\/\/.*\.(mp4|webm|ogg|mov)/i);
+
+      if (isVideoUrl) {
+        // Plain text video URL
+        const video = document.createElement('video');
+        video.className = 'carousel-video-player';
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.crossOrigin = 'anonymous';
+
+        const source = document.createElement('source');
+        source.src = isVideoUrl[0];
+        source.type = isVideoUrl[0].includes('.mp4') ? 'video/mp4' : 'video/webm';
+        video.appendChild(source);
+
+        // Add error handling - show gradient background on video load failure
+        video.addEventListener('error', () => {
+          videoContainer.classList.add('video-error');
+        });
+
+        // Also handle source error
+        source.addEventListener('error', () => {
+          videoContainer.classList.add('video-error');
+        });
+
+        videoContainer.appendChild(video);
+
+        // Force load
+        video.load();
+      } else if (videoLink) {
         const videoSrc = videoLink.href;
         const video = document.createElement('video');
         video.className = 'carousel-video-player';
