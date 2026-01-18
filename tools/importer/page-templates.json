@@ -3,11 +3,11 @@
     {
       "name": "vw-group-homepage",
       "urls": ["https://www.volkswagen-group.com/en"],
-      "description": "Volkswagen Group corporate homepage with hero slider",
+      "description": "Volkswagen Group corporate homepage with video carousel",
       "blocks": [
         {
-          "name": "hero-vw",
-          "instances": [".page-item--slider", ".slider-box"]
+          "name": "carousel-video",
+          "instances": [".page-item--slider", ".slider"]
         }
       ]
     }
