@@ -1,0 +1,244 @@
+/* Carousel Video Block - VW Group Style */
+.carousel-video-container .carousel-video-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.carousel-video {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 500px;
+  max-height: 800px;
+  overflow: hidden;
+  background-color: #002733;
+}
+
+/* Slides Container */
+.carousel-video-slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Individual Slide */
+.carousel-video-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.carousel-video-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Video Background */
+.carousel-video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.carousel-video-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(0, 39, 51, 0.85) 0%,
+    rgba(0, 39, 51, 0.6) 40%,
+    rgba(0, 39, 51, 0.2) 70%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+.carousel-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-video-background picture,
+.carousel-video-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content Box */
+.carousel-video-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  padding: 60px 24px;
+  box-sizing: border-box;
+}
+
+.carousel-video-content-inner {
+  max-width: 550px;
+  margin-left: 5%;
+}
+
+.carousel-video-content h1,
+.carousel-video-content h2 {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+}
+
+.carousel-video-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+/* CTA Button - Green VW Style */
+.carousel-video-cta,
+.carousel-video-content a {
+  display: inline-block;
+  background-color: #00b0a0;
+  color: #002733 !important;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-video-cta:hover,
+.carousel-video-content a:hover {
+  background-color: #00c4b3;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* Navigation Controls */
+.carousel-video-controls {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.carousel-video-prev,
+.carousel-video-next {
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background: rgba(0, 39, 51, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.carousel-video-prev:hover,
+.carousel-video-next:hover {
+  background: rgba(0, 176, 160, 0.8);
+  border-color: #00b0a0;
+}
+
+.carousel-video-prev svg,
+.carousel-video-next svg {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+}
+
+/* Dots */
+.carousel-video-dots {
+  display: flex;
+  gap: 12px;
+}
+
+.carousel-video-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-video-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.carousel-video-dot.active {
+  background: #00b0a0;
+  transform: scale(1.2);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .carousel-video-content h1,
+  .carousel-video-content h2 {
+    font-size: 2.5rem;
+  }
+
+  .carousel-video-content p {
+    font-size: 1.125rem;
+  }
+
+  .carousel-video-content-inner {
+    max-width: 600px;
+    margin-left: 8%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-video-content h1,
+  .carousel-video-content h2 {
+    font-size: 3rem;
+  }
+
+  .carousel-video-content-inner {
+    max-width: 650px;
+    margin-left: 10%;
+  }
+
+  .carousel-video-content {
+    padding: 80px 48px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-video-slide {
+    transition: none;
+  }
+
+  .carousel-video-player {
+    animation: none;
+  }
+}
