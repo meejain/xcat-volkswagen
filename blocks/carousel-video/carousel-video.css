@@ -92,45 +92,55 @@
   box-sizing: border-box;
 }
 
+/* Slider Box - Green transparent container */
 .carousel-video-content-inner {
   max-width: 550px;
   margin-left: 5%;
+  background: rgba(0, 176, 160, 0.85);
+  padding: 32px 40px;
+  border-radius: 0;
 }
 
 .carousel-video-content h1,
 .carousel-video-content h2 {
-  color: #fff;
+  color: #002733;
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
 }
 
 .carousel-video-content p {
-  color: rgba(255, 255, 255, 0.9);
+  color: #002733;
   font-size: 1rem;
   line-height: 1.6;
-  margin: 0 0 24px 0;
+  margin: 0 0 20px 0;
 }
 
-/* CTA Button - Green VW Style */
+.carousel-video-content p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* CTA Button - Dark button inside green box */
 .carousel-video-cta,
 .carousel-video-content a {
   display: inline-block;
-  background-color: #00b0a0;
-  color: #002733 !important;
-  padding: 14px 32px;
-  font-size: 1rem;
-  font-weight: 500;
+  background-color: #002733;
+  color: #fff !important;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 0;
   transition: background-color 0.2s ease, transform 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .carousel-video-cta:hover,
 .carousel-video-content a:hover {
-  background-color: #00c4b3;
-  transform: translateY(-2px);
+  background-color: #003d4d;
+  transform: translateY(-1px);
   text-decoration: none;
 }
 
@@ -203,28 +213,30 @@
 @media (min-width: 768px) {
   .carousel-video-content h1,
   .carousel-video-content h2 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
   }
 
   .carousel-video-content p {
-    font-size: 1.125rem;
+    font-size: 1.05rem;
   }
 
   .carousel-video-content-inner {
-    max-width: 600px;
+    max-width: 480px;
     margin-left: 8%;
+    padding: 36px 44px;
   }
 }
 
 @media (min-width: 1024px) {
   .carousel-video-content h1,
   .carousel-video-content h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .carousel-video-content-inner {
-    max-width: 650px;
+    max-width: 520px;
     margin-left: 10%;
+    padding: 40px 48px;
   }
 
   .carousel-video-content {
