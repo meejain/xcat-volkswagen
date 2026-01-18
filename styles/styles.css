@@ -19,9 +19,18 @@
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  /* VW Group Brand Colors */
+  --cws-green: #00806e;
+  --cws-deep-blue: #002733;
+  --cws-neon: #c2fe06;
+  --grey-e: #e5e5e5;
+  --grey-6: #626364;
+  --grey-9: #929495;
+
+  /* fonts - VW Group Font with fallbacks */
+  --vw-group-font: 'Volkswagen Group Font', 'VW Head', 'VW Text', Helvetica, Arial, sans-serif;
+  --body-font-family: var(--vw-group-font);
+  --heading-font-family: var(--vw-group-font);
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -35,6 +44,51 @@
   --heading-font-size-m: 27px;
   --heading-font-size-s: 24px;
   --heading-font-size-xs: 22px;
+
+  /* VW Group Design System */
+  --border-radius-s: 12px;
+  --border-radius-m: 24px;
+  --border-radius-max: 999px;
+  --border-width-m: 3px;
+  
+  /* Transitions */
+  --transition-subtle: .07s;
+  --transition-quick: .14s;
+  --transition-distinct: .21s;
+  --transition-slow: .28s;
+  --background-transition: var(--transition-quick);
+  
+  /* Spacing */
+  --gap-4: 4px;
+  --gap-8: 8px;
+  --gap-12: 12px;
+  --gap-16: 16px;
+  --gap-20: 20px;
+  --gap-24: 24px;
+  --gap-32: 32px;
+  --gap-40: 40px;
+  --gap-56: 56px;
+  --space-1: clamp(8px, 1vw, 16px);
+  --space-2: clamp(12px, 1.3vw, 20px);
+  --space-3: clamp(16px, 2vw, 24px);
+  --space-4: clamp(20px, 2vw, 32px);
+  --space-5: clamp(20px, 3vw, 40px);
+  --space-6: clamp(24px, 3vw, 40px);
+  --space-7: clamp(24px, 3vw, 48px);
+  --space-9: clamp(32px, 4vw, 56px);
+  --space-10: clamp(40px, 4vw, 56px);
+  --space-12: clamp(40px, 6vw, 96px);
+  
+  /* Colors with opacity */
+  --black-30p: rgba(0, 0, 0, .3);
+  --white: #fff;
+  --white-50p: hsla(0, 0%, 100%, .5);
+  --green-67p: rgba(0, 128, 110, .67);
+  
+  /* Container */
+  --container-padding: clamp(20px, 6vw, 96px);
+  --limited-content-width: 1200px;
+  --column-gap: 32px;
 
   /* nav height */
   --nav-height: 64px;
@@ -254,4 +308,70 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* VW Group specific section styles */
+main .section.carousel-video-container {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+main .section.carousel-video-container > div {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* Full width sections */
+main .section.full-width {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  max-width: 100vw;
+  padding: 0;
+}
+
+main .section.full-width > div {
+  max-width: 100%;
+  padding: 0;
+}
+
+/* VW Group color themes */
+.section.corporate-green {
+  background-color: var(--cws-green);
+  color: #fff;
+}
+
+.section.corporate-blue {
+  background-color: var(--cws-deep-blue);
+  color: #fff;
+}
+
+/* Video Stage */
+.video-stage > * {
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Utility classes for responsive text */
+.text-center {
+  text-align: center;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

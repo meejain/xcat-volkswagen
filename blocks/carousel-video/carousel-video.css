@@ -1,4 +1,28 @@
 /* Carousel Video Block - VW Group Style */
+/* CSS Variables matching VW Group site - EXACT from main site */
+:root {
+  --cws-green: #00806e;
+  --cws-deep-blue: #002733;
+  --cws-neon: #c2fe06;
+  --border-radius-m: 24px;
+  --border-radius-max: 999px;
+  --transition-quick: .14s;
+  --transition-distinct: .21s;
+  --gap-12: 12px;
+  --gap-16: 16px;
+  --gap-24: 24px;
+  --gap-32: 32px;
+  --space-2: clamp(12px, 1.3vw, 20px);
+  --space-5: clamp(20px, 3vw, 40px);
+  --space-6: clamp(24px, 3vw, 40px);
+  --space-9: clamp(32px, 4vw, 56px);
+  --space-12: clamp(40px, 6vw, 96px);
+  --black-30p: rgba(0, 0, 0, .3);
+  --white: #fff;
+  --green-67p: rgba(0, 128, 110, .67);
+  --vw-group-font: 'Volkswagen Group Font', 'VW Head', 'VW Text', Helvetica, Arial, sans-serif;
+}
+
 .carousel-video-container .carousel-video-wrapper {
   max-width: unset;
   padding: 0;
@@ -9,9 +33,10 @@
   width: 100%;
   height: 100vh;
   min-height: 500px;
-  max-height: 800px;
+  max-height: 900px;
   overflow: hidden;
-  background-color: #002733;
+  background-color: var(--cws-deep-blue);
+  isolation: isolate;
 }
 
 /* Slides Container */
@@ -30,12 +55,31 @@
   height: 100%;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
 }
 
 .carousel-video-slide.active {
   opacity: 1;
   visibility: visible;
+  z-index: 1;
+}
+
+/* Smooth crossfade effect */
+.carousel-video-slide.transitioning {
+  z-index: 2;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Video Background */
@@ -45,24 +89,22 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: -1;
 }
 
+/* Gradient overlay matching VW site - dark medium style */
 .carousel-video-background::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(0, 39, 51, 0.85) 0%,
-    rgba(0, 39, 51, 0.6) 40%,
-    rgba(0, 39, 51, 0.2) 70%,
-    transparent 100%
-  );
+  inset: 0;
   z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 13.02%,
+    transparent 87.5%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
 }
 
 .carousel-video-player {
@@ -78,169 +120,499 @@
   object-fit: cover;
 }
 
-/* Content Box */
+/* Content Box - matches slider-box structure */
 .carousel-video-content {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   z-index: 2;
-  padding: 60px 24px;
+  padding: var(--space-9) var(--gap-24);
   box-sizing: border-box;
+  pointer-events: none;
 }
 
-/* Slider Box - Green transparent container */
+/* Slider Box - EXACT VW dimensions: 540px x 342px external (with 40px padding) */
 .carousel-video-content-inner {
-  max-width: 550px;
-  margin-left: 5%;
-  background: rgba(0, 176, 160, 0.85);
-  padding: 32px 40px;
-  border-radius: 0;
+  max-width: 540px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  border-radius: var(--border-radius-m);
+  padding: 40px;
+  min-height: 342px;
+  background-color: var(--green-67p);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  color: #fff;
+  pointer-events: auto;
 }
 
+/* Titles - matching slider-box--title EXACTLY from VW CSS with VW Group Font */
 .carousel-video-content h1,
 .carousel-video-content h2 {
-  color: #002733;
-  font-size: 2rem;
-  font-weight: 700;
+  color: #fff;
+  font-family: var(--vw-group-font);
+  font-size: clamp(1.7777777778rem, 3vw, 2.4444444444rem);
   line-height: 1.2;
-  margin: 0 0 16px 0;
+  font-weight: 300;
+  margin: 0 0 var(--space-2) 0;
 }
 
+/* Text content - matching VW body text with VW Group Font */
 .carousel-video-content p {
-  color: #002733;
-  font-size: 1rem;
-  line-height: 1.6;
-  margin: 0 0 20px 0;
+  color: #fff;
+  font-family: var(--vw-group-font);
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  margin-top: 2rem;
 }
 
-.carousel-video-content p:last-of-type {
-  margin-bottom: 0;
+/* Button wrapper - align to the right */
+.carousel-video-content p:has(strong a),
+.carousel-video-content p:has(a.carousel-video-cta) {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
 }
 
-/* CTA Button - Dark button inside green box */
+.carousel-video-content p:has(strong a) strong {
+  display: contents;
+}
+
+.carousel-video-content p + p {
+  margin-top: 1em;
+}
+
+/* CTA Button - RIGHT aligned with EXACT VW specs: font-weight 400, 40px from edges */
 .carousel-video-cta,
-.carousel-video-content a {
+.carousel-video-content a.button,
+.carousel-video-content .button-container a {
   display: inline-block;
-  background-color: #002733;
-  color: #fff !important;
-  padding: 12px 28px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  width: fit-content;
+  background-color: var(--cws-neon);
+  color: var(--cws-deep-blue) !important;
+  padding: 14px 32px;
+  font-family: var(--vw-group-font);
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  text-align: start;
   text-decoration: none;
-  border-radius: 0;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  border-radius: var(--border-radius-m);
+  transition: all var(--transition-quick);
+  letter-spacing: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .carousel-video-cta:hover,
-.carousel-video-content a:hover {
-  background-color: #003d4d;
-  transform: translateY(-1px);
+.carousel-video-content a.button:hover,
+.carousel-video-content .button-container a:hover {
+  background-color: var(--cws-deep-blue);
+  color: var(--cws-neon) !important;
   text-decoration: none;
+  cursor: pointer;
 }
 
-/* Navigation Controls */
+/* Navigation Controls - matching slider-controls */
 .carousel-video-controls {
   position: absolute;
-  bottom: 40px;
+  bottom: var(--gap-16);
   left: 50%;
   transform: translateX(-50%);
+  height: 45px;
+  width: 100%;
+  max-width: 400px;
   display: flex;
+  border-radius: var(--border-radius-max);
+  background-color: var(--black-30p);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  color: var(--white);
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
   z-index: 10;
+  padding: 0;
 }
 
 .carousel-video-prev,
 .carousel-video-next {
-  width: 48px;
-  height: 48px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  background: rgba(0, 39, 51, 0.5);
+  font-size: clamp(1.1111111111rem, 2vw, 1.6666666667rem);
+  line-height: 1.3;
+  font-weight: 300;
+  padding: 12px 18px;
+  background: transparent;
+  border: none;
+  color: var(--white);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: color var(--transition-quick);
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
 }
 
 .carousel-video-prev:hover,
 .carousel-video-next:hover {
-  background: rgba(0, 176, 160, 0.8);
-  border-color: #00b0a0;
+  color: var(--cws-neon);
+  cursor: pointer;
 }
 
 .carousel-video-prev svg,
 .carousel-video-next svg {
   width: 24px;
   height: 24px;
-  fill: #fff;
+  fill: currentColor;
+  transition: fill 0.2s ease;
 }
 
-/* Dots */
+/* Dots - matching slider-controls--dots */
 .carousel-video-dots {
   display: flex;
-  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-12);
+  flex: 1;
+  padding: 0 8px;
 }
 
 .carousel-video-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  width: 8px;
+  height: 8px;
+  border-radius: var(--border-radius-max);
+  background-color: var(--white);
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: width var(--transition-distinct);
   padding: 0;
+  flex-shrink: 0;
 }
 
 .carousel-video-dot:hover {
-  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
 }
 
 .carousel-video-dot.active {
-  background: #00b0a0;
-  transform: scale(1.2);
+  width: 30px;
+  background-color: var(--white);
 }
 
-/* Responsive */
+/* Responsive - Tablet and up */
 @media (min-width: 768px) {
   .carousel-video-content h1,
   .carousel-video-content h2 {
-    font-size: 2.25rem;
-  }
-
-  .carousel-video-content p {
-    font-size: 1.05rem;
+    font-size: clamp(1.7777777778rem, 3vw, 2.4444444444rem);
   }
 
   .carousel-video-content-inner {
-    max-width: 480px;
-    margin-left: 8%;
-    padding: 36px 44px;
+    max-width: 400px;
+    padding: 40px;
+    min-height: 342px;
   }
 }
 
-@media (min-width: 1024px) {
-  .carousel-video-content h1,
-  .carousel-video-content h2 {
-    font-size: 2.5rem;
+/* Responsive - Desktop (88.8888888889rem = 1600px) */
+@media (min-width: 88.8888888889rem) {
+  .carousel-video-controls {
+    height: 60px;
+    max-width: 500px;
   }
 
-  .carousel-video-content-inner {
-    max-width: 520px;
-    margin-left: 10%;
-    padding: 40px 48px;
+  .carousel-video-dots {
+    gap: 14px;
+  }
+
+  .carousel-video-dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .carousel-video-dot.active {
+    width: 50px;
+  }
+
+  .carousel-video-prev svg,
+  .carousel-video-next svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Landscape orientation specific styles */
+@media (orientation: landscape) {
+  .carousel-video-slide {
+    display: grid;
+    grid-template-areas: 
+      "image-start . ."
+      ". content ."
+      ". . image-end";
+    grid-template-columns: 10vw auto 10vw;
+    grid-template-rows: 2fr auto 1fr;
+  }
+
+  .carousel-video-background {
+    grid-area: image;
+    grid-column: image-start / image-end;
+    grid-row: image-start / image-end;
   }
 
   .carousel-video-content {
-    padding: 80px 48px;
+    grid-area: content;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 64px;
+    margin-bottom: 64px;
+  }
+
+  .carousel-video-content.-left {
+    justify-content: flex-start;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 900px) {
+  .carousel-video-slide {
+    grid-template-rows: 0 auto;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .carousel-video-content {
+    margin-top: var(--space-2);
+  }
+
+  .carousel-video-content h1,
+  .carousel-video-content h2 {
+    font-size: clamp(1.1111111111rem, 2vw, 1.6666666667rem);
+    line-height: 1.3;
+    font-weight: 700;
+  }
+}
+
+/* Portrait orientation specific styles */
+@media (orientation: portrait) {
+  .carousel-video-slide {
+    display: grid;
+    grid-template-areas: 
+      "image image image"
+      "previous content next"
+      ". pagination .";
+    grid-template-rows: auto auto 1fr;
+    grid-template-columns: var(--gap-32) 1fr var(--gap-32);
+  }
+
+  .carousel-video-background {
+    grid-area: image;
+  }
+
+  .carousel-video-content {
+    grid-area: content;
+    padding-top: var(--gap-24);
+    padding-bottom: var(--gap-24);
+  }
+
+  .carousel-video-controls {
+    padding-bottom: var(--gap-16);
+  }
+}
+
+/* Video error fallback */
+.carousel-video-background.video-error {
+  background: linear-gradient(
+    135deg,
+    var(--cws-deep-blue) 0%,
+    var(--cws-green) 100%
+  );
+}
+
+.carousel-video-background.video-error::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+/* Latest videos / Gallery integration */
+.latest-videos {
+  display: flex;
+  flex-direction: column;
+}
+
+.latest-videos--gallery > * {
+  animation: fadeIn 1s;
+}
+
+/* Ensure proper contrast for text */
+.carousel-video-content-inner h1,
+.carousel-video-content-inner h2,
+.carousel-video-content-inner h3,
+.carousel-video-content-inner p {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading state */
+.carousel-video-slide.loading {
+  background-color: var(--cws-deep-blue);
+}
+
+.carousel-video-slide.loading .carousel-video-background::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(57, 255, 198, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Focus states for accessibility */
+.carousel-video-prev:focus-visible,
+.carousel-video-next:focus-visible,
+.carousel-video-dot:focus-visible {
+  outline: var(--cws-neon) solid var(--border-width-m);
+  outline-offset: 4px;
+}
+
+.carousel-video-cta:focus-visible,
+.carousel-video-content a:focus-visible {
+  outline: var(--cws-neon) solid var(--border-width-m);
+  outline-offset: 4px;
+  text-decoration: none;
+}
+
+/* Improved typography hierarchy */
+.carousel-video-content-inner {
+  line-height: 1.5;
+}
+
+.carousel-video-content-inner > *:first-child {
+  margin-top: 0;
+}
+
+.carousel-video-content-inner > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Large desktop improvements */
+@media (min-width: 1600px) {
+  .carousel-video {
+    max-height: 1000px;
+  }
+
+  .carousel-video-controls {
+    max-width: 600px;
+    height: 70px;
+  }
+
+  .carousel-video-content-inner {
+    max-width: 440px;
+    min-height: 342px;
+  }
+}
+
+/* Very large screens */
+@media (min-width: 2000px) {
+  .carousel-video-content {
+    padding-left: max(
+      calc((100% - 2000px) / 2 + var(--container-padding)),
+      var(--container-padding)
+    );
+    padding-right: max(
+      calc((100% - 2000px) / 2 + var(--container-padding)),
+      var(--container-padding)
+    );
+  }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Keep default 30rem max-width as per VW CSS */
+  .carousel-video-content-inner {
+    padding: var(--space-6);
+  }
+
+  .carousel-video-controls {
+    height: 50px;
+    max-width: 450px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 479px) {
+  .carousel-video {
+    min-height: 600px;
+  }
+
+  .carousel-video-content {
+    padding: 24px 16px;
+  }
+
+  .carousel-video-content-inner {
+    padding: var(--gap-20);
+    border-radius: var(--border-radius-s);
+  }
+
+  /* Keep default responsive font size from clamp */
+  .carousel-video-content h1,
+  .carousel-video-content h2 {
+    margin-bottom: var(--gap-16);
+  }
+
+  .carousel-video-controls {
+    max-width: 320px;
+    height: 40px;
+    width: calc(100% - 32px);
+    bottom: 12px;
+  }
+
+  .carousel-video-prev,
+  .carousel-video-next {
+    padding: 8px 12px;
+  }
+
+  .carousel-video-prev svg,
+  .carousel-video-next svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .carousel-video-dots {
+    gap: 10px;
+  }
+
+  .carousel-video-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .carousel-video-dot.active {
+    width: 24px;
+  }
+
+  .carousel-video-cta,
+  .carousel-video-content a.button,
+  .carousel-video-content .button-container a {
+    padding: 12px 24px;
+    font-size: 16px;
   }
 }
 
@@ -252,5 +624,30 @@
 
   .carousel-video-player {
     animation: none;
+  }
+
+  .carousel-video-slide.active {
+    animation: none;
+  }
+
+  .carousel-video-slide.loading .carousel-video-background::before {
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .carousel-video-controls {
+    display: none;
+  }
+
+  .carousel-video {
+    height: auto;
+    max-height: none;
+    page-break-inside: avoid;
+  }
+
+  .carousel-video-slide:not(.active) {
+    display: none;
   }
 }

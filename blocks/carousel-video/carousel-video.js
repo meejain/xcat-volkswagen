@@ -159,30 +159,62 @@ export default function decorate(block) {
   let currentIndex = 0;
   const totalSlides = slides.length;
   let autoplayInterval;
+  let isTransitioning = false;
 
   function goToSlide(index) {
     // Handle wrap-around
     if (index < 0) index = totalSlides - 1;
     if (index >= totalSlides) index = 0;
 
+    // Prevent rapid clicking during transition
+    if (isTransitioning || index === currentIndex) return;
+
+    isTransitioning = true;
+    const previousIndex = currentIndex;
     currentIndex = index;
 
-    // Update slides
+    // Update slides with smooth transition
     const allSlides = block.querySelectorAll('.carousel-video-slide');
-    allSlides.forEach((s, i) => {
-      s.classList.toggle('active', i === currentIndex);
-      // Pause/play videos
-      const video = s.querySelector('video');
-      if (video) {
+    
+    // Mark transitioning slide
+    if (allSlides[previousIndex]) {
+      allSlides[previousIndex].classList.add('transitioning');
+    }
+
+    // Small delay to ensure smooth crossfade
+    requestAnimationFrame(() => {
+      allSlides.forEach((s, i) => {
         if (i === currentIndex) {
-          video.play().catch(() => {});
-        } else {
-          video.pause();
+          s.classList.add('active');
+          // Play video for active slide
+          const video = s.querySelector('video');
+          if (video) {
+            video.currentTime = 0; // Reset to start
+            video.play().catch(() => {});
+          }
+        } else if (i === previousIndex) {
+          // Pause previous video
+          const video = s.querySelector('video');
+          if (video) {
+            video.pause();
+          }
         }
-      }
+      });
+
+      // Remove active class from previous slide after transition
+      setTimeout(() => {
+        allSlides.forEach((s, i) => {
+          if (i !== currentIndex) {
+            s.classList.remove('active', 'transitioning');
+          } else {
+            s.classList.remove('transitioning');
+          }
+        });
+        isTransitioning = false;
+      }, 600); // Match CSS transition duration
     });
 
-    // Update dots
+    // Update dots with smooth animation
     const allDots = block.querySelectorAll('.carousel-video-dot');
     allDots.forEach((d, i) => {
       d.classList.toggle('active', i === currentIndex);
@@ -199,7 +231,7 @@ export default function decorate(block) {
 
   function startAutoplay() {
     stopAutoplay();
-    autoplayInterval = setInterval(nextSlide, 8000); // 8 seconds per slide
+    autoplayInterval = setInterval(nextSlide, 7000); // 7 seconds per slide
   }
 
   function stopAutoplay() {
@@ -231,12 +263,65 @@ export default function decorate(block) {
   block.addEventListener('mouseenter', stopAutoplay);
   block.addEventListener('mouseleave', startAutoplay);
 
+  // Keyboard navigation
+  block.setAttribute('tabindex', '0');
+  block.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      prevSlide();
+      startAutoplay();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      nextSlide();
+      startAutoplay();
+    }
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  block.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  block.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        // Swipe left - next slide
+        nextSlide();
+      } else {
+        // Swipe right - previous slide
+        prevSlide();
+      }
+      startAutoplay();
+    }
+  }
+
   // Start autoplay
   startAutoplay();
 
-  // Play first video
+  // Play first video with proper initialization
   const firstVideo = block.querySelector('.carousel-video-slide.active video');
   if (firstVideo) {
-    firstVideo.play().catch(() => {});
+    firstVideo.currentTime = 0;
+    firstVideo.play().catch(() => {
+      // Autoplay might be blocked, add user interaction handler
+      const playOnInteraction = () => {
+        firstVideo.play().catch(() => {});
+        document.removeEventListener('click', playOnInteraction);
+        document.removeEventListener('touchstart', playOnInteraction);
+      };
+      document.addEventListener('click', playOnInteraction, { once: true });
+      document.addEventListener('touchstart', playOnInteraction, { once: true, passive: true });
+    });
   }
 }
