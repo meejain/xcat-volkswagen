@@ -1,20 +1,265 @@
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: var(--cws-deep-blue);
+  color: var(--white);
+  font-size: 0.7777777778rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.25px;
+  margin-top: 0;
+  position: relative;
+  /* Remove flex that might interfere with sticky */
 }
 
-footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+footer .footer {
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: var(--cws-deep-blue);
 }
 
 footer .footer p {
   margin: 0;
 }
 
+/* Remove any white space above footer */
+main + footer,
+body > footer {
+  margin-top: 0 !important;
+}
+
+/* Ensure no gap from last section */
+main {
+  margin-bottom: 0 !important;
+}
+
+main > .section:last-of-type {
+  margin: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Target empty sections before footer */
+main > .section:empty {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: none;
+}
+
+/* Footer disclaimer text - below footer bar */
+.footer-disclaimer {
+  width: 100%;
+  margin: 0;
+  padding: var(--gap-24) 0;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  opacity: 0.8;
+  background-color: var(--cws-deep-blue);
+  position: relative;
+  z-index: 1;
+}
+
+.footer-disclaimer > div {
+  max-width: var(--limited-content-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.footer-disclaimer a {
+  color: var(--cws-neon);
+  text-decoration: underline;
+}
+
+/* Main footer content - FIXED to BOTTOM of viewport by default, with scroll-based visibility */
+.footer-content {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: transparent;
+  border-top: none;
+  z-index: 1000;
+  box-sizing: border-box;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-top 0.3s ease, transform 0.3s ease;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Hidden state - slides down when scrolling down */
+.footer-content.hidden {
+  transform: translateY(100%);
+}
+
+/* When footer is in view, bar becomes part of footer (not fixed) */
+.footer-content.in-footer {
+  position: relative;
+  background: var(--cws-deep-blue);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-top: 1px solid rgba(122, 128, 132, 0.3);
+  transform: translateY(0);
+}
+
+/* Inner wrapper for content max-width */
+.footer-content-inner {
+  max-width: var(--limited-content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-12);
+  padding: var(--gap-12) var(--container-padding);
+}
+
+.footer-content a {
+  border-radius: var(--gap-4);
+  color: var(--white);
+  text-decoration: none;
+  transition: color var(--transition-quick);
+}
+
+.footer-content a:focus-visible {
+  outline: var(--cws-neon) solid var(--border-width-m);
+  outline-offset: var(--gap-4);
+  text-decoration: none;
+}
+
+.footer-content a:active,
+.footer-content a:hover {
+  color: var(--cws-neon);
+}
+
+/* Copyright and links section */
+.footer-copyright-and-links {
+  flex-grow: 1000;
+  white-space: nowrap;
+  margin-right: auto;
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--gap-12);
+  row-gap: var(--gap-4);
+}
+
+.footer-copyright-and-links::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 2000px) {
+  .footer-copyright-and-links {
+    padding-right: 0;
+  }
+}
+
+/* Stocks and social section */
+.footer-stocks-and-social {
+  flex-grow: 1;
+  display: flex;
+  row-gap: var(--gap-12);
+  column-gap: var(--gap-24);
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 2000px) {
+  .footer-stocks-and-social {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 44.4444444444rem) {
+  .footer-stocks-and-social {
+    display: none;
+  }
+}
+
+/* Stock prices */
+.footer-stocks {
+  white-space: nowrap;
+  display: flex;
+  gap: 12px;
+}
+
+.footer-stocks-item {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  opacity: 0.5;
+  transition: opacity var(--transition-quick);
+}
+
+.footer-stocks-item.ready {
+  opacity: 1;
+}
+
+.footer-stocks-item-label {
+  font-weight: 400;
+}
+
+.footer-stocks-item-price {
+  font-weight: 700;
+}
+
+/* Social media icons */
+.footer-social {
+  display: flex;
+  gap: var(--gap-12);
+  align-items: center;
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  opacity: 0.8;
+  transition: opacity var(--transition-quick);
+}
+
+.footer-social a:hover {
+  opacity: 1;
+}
+
+.footer-social svg,
+.footer-social img {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Footer logo section - at bottom of footer */
+.footer-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--gap-32) var(--container-padding);
+  border-top: 1px solid rgba(122, 128, 132, 0.5);
+  max-width: 100%;
+  margin: 0;
+  background-color: var(--cws-deep-blue);
+  position: relative;
+  z-index: 1;
+}
+
+.footer-logo svg,
+.footer-logo img {
+  height: clamp(12px, 2vw, 18px);
+  width: auto;
+  opacity: 0.7;
+  transition: opacity var(--transition-quick);
+}
+
+.footer-logo:hover svg,
+.footer-logo:hover img {
+  opacity: 1;
+}
+
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer {
+    font-size: 0.875rem;
+  }
+  
+  .footer-disclaimer {
+    font-size: 0.75rem;
   }
 }

@@ -91,7 +91,8 @@
   --column-gap: 32px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 72px;
+  --header-height: 72px;
 }
 
 /* fallback fonts */
@@ -294,6 +295,16 @@ main > .section > div {
 
 main > .section:first-of-type {
   margin-top: 0;
+}
+
+main > .section:last-of-type {
+  margin: 0;
+}
+
+main > .section:empty {
+  margin: 0;
+  padding: 0;
+  display: none;
 }
 
 @media (width >= 900px) {
