@@ -144,13 +144,22 @@ export default async function decorate(block) {
     });
   }
 
-  // Mark active language in dropdown
+  // Mark active language in dropdown and fix English link to go to root
   const currentPath = window.location.pathname;
   const currentLang = currentPath.startsWith('/de') ? 'de' : 'en';
   const languageLinks = nav.querySelectorAll('.nav-tools a[href*="/de"], .nav-tools a[href*="/en"]');
   languageLinks.forEach(link => {
+    // Change English link from /en to root /
+    if (link.href.includes('/en')) {
+      link.href = link.href.replace('/en', '');
+      // If href becomes just the domain, add /
+      if (!link.pathname || link.pathname === '') {
+        link.pathname = '/';
+      }
+    }
+    
     if ((currentLang === 'de' && link.href.includes('/de')) || 
-        (currentLang === 'en' && link.href.includes('/en'))) {
+        (currentLang === 'en' && !link.href.includes('/de'))) {
       link.classList.add('is-active');
     }
   });
