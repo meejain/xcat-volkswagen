@@ -211,7 +211,7 @@ export default function decorate(block) {
           }
         });
         isTransitioning = false;
-      }, 600); // Match CSS transition duration
+      }, 800); // Match CSS transition duration
     });
 
     // Update dots with smooth animation
@@ -231,7 +231,7 @@ export default function decorate(block) {
 
   function startAutoplay() {
     stopAutoplay();
-    autoplayInterval = setInterval(nextSlide, 7000); // 7 seconds per slide
+    autoplayInterval = setInterval(nextSlide, 5000); // 5 seconds per slide (including 0.8s transition)
   }
 
   function stopAutoplay() {

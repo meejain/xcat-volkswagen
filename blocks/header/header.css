@@ -45,6 +45,74 @@ header nav .nav-hamburger {
   display: none;
 }
 
+header nav .nav-hamburger button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+header nav .nav-hamburger button:hover {
+  color: #c2fe06;
+}
+
+header nav .nav-hamburger button::before {
+  display: none;
+}
+
+/* Hamburger icon - three lines */
+header nav .nav-hamburger-icon {
+  display: block;
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  transition: background-color 0.3s ease;
+}
+
+header nav .nav-hamburger-icon::before,
+header nav .nav-hamburger-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transition: transform 0.3s ease;
+}
+
+header nav .nav-hamburger-icon::before {
+  top: -8px;
+}
+
+header nav .nav-hamburger-icon::after {
+  top: 8px;
+}
+
+/* Animated hamburger to X when open */
+header nav[aria-expanded='true'] .nav-hamburger-icon {
+  background-color: transparent;
+}
+
+header nav[aria-expanded='true'] .nav-hamburger-icon::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+header nav[aria-expanded='true'] .nav-hamburger-icon::after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
 @media (width < 1201px) {
   header nav .nav-hamburger {
     display: block;

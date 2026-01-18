@@ -50,7 +50,7 @@ main > .section:empty {
   margin: 0;
   padding: var(--gap-24) 0;
   font-size: 0.7rem;
-  line-height: 1.5;
+  line-height: 1.8;
   opacity: 0.8;
   background-color: var(--cws-deep-blue);
   position: relative;
@@ -58,7 +58,7 @@ main > .section:empty {
 }
 
 .footer-disclaimer > div {
-  max-width: var(--limited-content-width);
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 var(--container-padding);
 }
@@ -101,7 +101,7 @@ main > .section:empty {
 
 /* Inner wrapper for content max-width */
 .footer-content-inner {
-  max-width: var(--limited-content-width);
+  max-width: 1600px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
